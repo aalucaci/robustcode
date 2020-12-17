@@ -51,17 +51,17 @@ build_status <- function(data, complete) {
   return(status)
 }
 
+col_format <- function(n, type) {
+  if (n == 0) {
+    " "
+  } else {
+    n
+  }
+}
+
 show_status <-function(data, complete = TRUE, pad = FALSE, should_update = FALSE) {
   validate_data(data)
   status <- build_status(data = data, complete = complete)
-
-  col_format <- function(n, type) {
-    if (n == 0) {
-      " "
-    } else {
-      n
-    }
-  }
 
   message <- paste0(
     status, " | ", sprintf("%3d", data$n_ok), " ",
