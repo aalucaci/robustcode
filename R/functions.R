@@ -29,9 +29,7 @@ validate_data <- function(data) {
   )
 }
 
-show_status <-function(data, complete = TRUE, pad = FALSE, should_update = FALSE) {
-  validate_data(data)
-
+build_status <- function(data, complete) {
   if (complete) {
     if (data$n_fail > 0) {
       status <- crayon::red(cli::symbol$cross)
@@ -49,6 +47,13 @@ show_status <-function(data, complete = TRUE, pad = FALSE, should_update = FALSE
       status <- colourise(status, "warning")
     }
   }
+
+  return(status)
+}
+
+show_status <-function(data, complete = TRUE, pad = FALSE, should_update = FALSE) {
+  validate_data(data)
+  status <- build_status(data = data, complete = complete)
 
   col_format <- function(n, type) {
     if (n == 0) {
