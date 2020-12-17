@@ -1,8 +1,8 @@
 colourise <- function(text, as = c("success", "skip", "warning", "failure", "error")) {
-  crayon::style(text, style(as))
+  crayon::style(text, get_text_color(as))
 }
 
-style <- function(type = c("success", "skip", "warning", "failure", "error")) {
+get_text_color <- function(type = c("success", "skip", "warning", "failure", "error")) {
   checkmate::assertCharacter(x = type, len = 1)
   checkmate::assertSubset(
     x = type,
