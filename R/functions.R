@@ -3,15 +3,22 @@ colourise <- function(text, as = c("success", "skip", "warning", "failure", "err
 }
 
 style <- function(type = c("success", "skip", "warning", "failure", "error")) {
-  type <- match.arg(type)
+  checkmate::assertCharacter(x = type, len = 1)
+  checkmate::assertSubset(
+    x = type,
+    choices = c("success", "skip", "warning", "failure", "error"),
+    empty.ok = FALSE
+  )
 
-  c(
+  ll <- list(
     success = "green",
     skip = "blue",
     warning = "magenta",
     failure = "orange",
     error = "orange"
-  )[[type]]
+  )
+
+  return(ll[type])
 }
 
 validate_data <- function(data) {
@@ -80,8 +87,7 @@ show_status <-function(data, complete = TRUE, pad = FALSE, should_update = FALSE
 
   if (!complete) {
     message <- stringr::str_pad(message, width)
-    cat("\r", message)
-  } else {
-    cat("\r", message)
   }
+
+  cat("\r", message)
 }
