@@ -14,7 +14,24 @@ style <- function(type = c("success", "skip", "warning", "failure", "error")) {
   )[[type]]
 }
 
+validate_data <- function(data) {
+  checkmate::assertList(
+    x = data,
+    len = 4,
+    names = "named"
+  )
+
+  expected_names <- c("n_ok", "n_fail", "n_warn", "n_skip")
+  checkmate::assertSubset(
+    x = names(data),
+    choices = expected_names,
+    empty.ok = FALSE
+  )
+}
+
 show_status <-function(data, complete = TRUE, pad = FALSE, should_update = FALSE) {
+  validate_data(data)
+
   if (complete) {
     if (data$n_fail > 0) {
       status <- crayon::red(cli::symbol$cross)
