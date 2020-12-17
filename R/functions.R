@@ -33,19 +33,19 @@ build_status <- function(data, complete) {
   if (complete) {
     if (data$n_fail > 0) {
       status <- crayon::red(cli::symbol$cross)
-    } else {
-      status <- crayon::green(cli::symbol$tick)
+      return(status)
     }
-  } else {
-    if (!should_update) {
-      return()
-    }
+    status <- crayon::green(cli::symbol$tick)
+    return(status)
+  }
+  if (!should_update) {
+    return(invisible(NULL))
+  }
 
-    if (data$n_fail > 0) {
-      status <- colourise(status, "failure")
-    } else if (data$n_warn > 0) {
-      status <- colourise(status, "warning")
-    }
+  if (data$n_fail > 0) {
+    status <- colourise(status, "failure")
+  } else if (data$n_warn > 0) {
+    status <- colourise(status, "warning")
   }
 
   return(status)
